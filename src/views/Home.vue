@@ -8,7 +8,8 @@
 <script>
 // @ is an alias to /src
 import Ticket from "@/components/Ticket.vue";
-import axios from "axios";
+//import axios from "axios";
+import TicketService from "../services/TicketService";
 
 export default {
   name: "Home",
@@ -21,11 +22,9 @@ export default {
     }
   },
   created(){
-    axios.get('https://my-json-server.typicode.com/Neverlanders/fakejson/events')
-        .then(response =>{
-          //console.log('events', response.data)
-         this.events = response.data
-        }).catch(error => {console.log(error)})
+    TicketService.getEvents().then(response =>{
+      this.events = response.data;
+    }).catch(error =>{console.log(error)})
   }
 };
 </script>
