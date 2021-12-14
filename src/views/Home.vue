@@ -8,6 +8,7 @@
 <script>
 // @ is an alias to /src
 import Ticket from "@/components/Ticket.vue";
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -16,27 +17,15 @@ export default {
   },
   data(){
     return{
-      events:[{
-        id:1,
-        category:'concert',
-        title: 'Tomorrow Land',
-        description: 'Festival op de Schorre',
-        location: 'Boom',
-        date: 'August 08 2021',
-        time: '09:00'
-      },
-        {
-          id:2,
-          category:'concert',
-          title: 'Rock Werchter',
-          description: 'Festival Rock',
-          location: 'Werchter',
-          date: 'July 04 2021',
-          time: '09:00'
-        }
-      ],
-
+      events: null
     }
+  },
+  created(){
+    axios.get('https://my-json-server.typicode.com/Neverlanders/fakejson/events')
+        .then(response =>{
+          //console.log('events', response.data)
+         this.events = response.data
+        }).catch(error => {console.log(error)})
   }
 };
 </script>
