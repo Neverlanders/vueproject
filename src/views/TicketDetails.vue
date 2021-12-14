@@ -1,12 +1,12 @@
 <template>
-  <div class="card border-dark mb-3 d-block mx-auto" style="max-width:18rem;">
-    <div class="card-header">{{singleEvent.title}}</div>
+  <div v-if="event" class="card border-dark mb-3 d-block mx-auto" style="max-width:18rem;">
+    <div class="card-header">{{event.title}}</div>
     <div class="card-body text-dark">
-      <h5 class="card-title">{{singleEvent.date}} - {{singleEvent.time}}</h5>
+      <h5 class="card-title">{{event.date}} - {{event.time}}</h5>
       <p class="card-text">
-        {{singleEvent.description}}
+        {{event.description}}
       </p>
-      <p class="alert-danger">Locatie:{{singleEvent.location}}</p>
+      <p class="alert-danger">Locatie:{{event.location}}</p>
     </div>
   </div>
 </template>
@@ -15,12 +15,13 @@
 import TicketService from "../services/TicketService";
 export default {
   name: "TicketDetails",
+  props:["id"],
   data(){
     return{
       event:null,
-      id:1
     }
   },
+
   created(){
     TicketService.getEvent(this.id).then(response => {
       this.event = response.data;
