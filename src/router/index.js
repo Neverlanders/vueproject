@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import TicketDetails from "../views/TicketDetails";
+import TicketDetails from "../views/Ticket/Details";
+import TicketEdit from "../views/Ticket/Edit";
+import TicketLayout from "../views/Layout";
 
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
-    props: route => ({ page: parseInt(route.query.page) || 1})
+    props: (route) => ({ page: parseInt(route.query.page) || 1 }),
   },
   {
     path: "/about",
@@ -20,10 +22,23 @@ const routes = [
   },
   {
     path: "/event/:id",
-    name:"TicketDetails",
+    name: "TicketLayout",
     props: true,
-    component: TicketDetails
-  }
+    component: TicketLayout,
+    children: [
+      {
+        path: "",
+        name: "TicketDetails",
+        component: TicketDetails,
+      },
+      {
+        path: "/edit",
+        name: "TicketEdit",
+        component: TicketEdit,
+      },
+    ],
+  },
+
 ];
 
 const router = createRouter({
