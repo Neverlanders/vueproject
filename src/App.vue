@@ -1,11 +1,18 @@
 <template>
+  <div class="alert alert-info" v-if="GStore.flashMessage">
+    {{ GStore.flashMessage }}
+  </div>
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
   <router-view />
 </template>
-
+<script>
+  export default{
+    inject: ["GStore"],
+  }
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -11,8 +11,12 @@ export default {
     register(){
       this.GStore.flashMessage = "U bent geregistreerd voor " + this.event.title;
       setTimeout(()=>{
-        this.Gstore.flashMessage = "";
-      }, 4000)
+        this.GStore.flashMessage = "";
+      }, 4000);
+      this.$router.push({
+        name: "TicketDetails",
+        params: { id: this.event.id}
+      })
     }
   }
 };
