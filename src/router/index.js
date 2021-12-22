@@ -3,6 +3,8 @@ import Home from "../views/Home.vue";
 import TicketDetails from "../views/Ticket/Details";
 import TicketEdit from "../views/Ticket/Edit";
 import TicketLayout from "../views/Layout";
+import TicketRegister from "../views/Ticket/Register";
+import P404 from "../views/P404";
 
 const routes = [
   {
@@ -12,7 +14,7 @@ const routes = [
     props: (route) => ({ page: parseInt(route.query.page) || 1 }),
   },
   {
-    path: "/about",
+    path: "/about-us",
     name: "About",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -21,7 +23,11 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/event/:id",
+    path: "/about",
+    redirect: { name: "About" },
+  },
+  {
+    path: "/events/:id",
     name: "TicketLayout",
     props: true,
     component: TicketLayout,
@@ -36,9 +42,38 @@ const routes = [
         name: "TicketEdit",
         component: TicketEdit,
       },
+      {
+        path: "/register",
+        name: "TicketRegister",
+        component: TicketRegister,
+      },
     ],
   },
-
+  {
+    path: "/event/:id",
+    redirect: (to) => {
+      return { name: "TicketDetails", params: { id: to.params.id } };
+    },
+    children: [
+      {
+        path: "edit",
+        redirect: (to) => {
+          return { name: "TicketEdit", params: { id: to.params.id } };
+        },
+      },
+    ],
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "P404",
+    component: P404,
+  },
+  {
+    path: "/404/:resource",
+    name: "404Resource",
+    component: P404,
+    props: true,
+  },
 ];
 
 const router = createRouter({
